@@ -1,0 +1,17 @@
+{
+  "name": "atlantida-bot",
+  "version": "1.0.0",
+  "description": "Bot de Atlantida Rp",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "NEXUSKITKAT#7501",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^4.1.1",
+    "console-stamp": "^3.0.2",
+    "discord.js": "^12.5.3",
+    "eslint": "^7.25.0"
+  }
+}
