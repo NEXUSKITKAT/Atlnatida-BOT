@@ -170,14 +170,14 @@ const stats = {
 client.on('guildMemberAdd', member => {
 	if(member.guild.id !== stats.serverID) return;
 	client.channels.cache.get(stats.total).setName(`Usuarios Totales: ${member.guild.memberCount}`);
-	client.channels.cache.get(stats.member).setName(`Miembros: ${member.guild.members.cache.filter(m => !m.user.bot).size}`);
+	client.channels.cache.get(stats.member).setName(`Miembros +16: ${member.guild.members.cache.filter(rol => rol.id === '832277915747614811').size}`);
 	client.channels.cache.get(stats.bots).setName(`Bots: ${member.guild.members.cache.filter(m => m.user.bot).size}`);
 });
 
 client.on('guildMemberRemove', member => {
 	if(member.guild.id !== stats.serverID) return;
 	client.channels.cache.get(stats.total).setName(`Usuarios Totales: ${member.guild.memberCount}`);
-	client.channels.cache.get(stats.member).setName(`Miembros: ${member.guild.members.cache.filter(m => !m.user.bot).size}`);
+	client.channels.cache.get(stats.member).setName(`Miembros +16: ${member.guild.members.cache.filter(rol => rol.id === '832277915747614811').size}`);
 	client.channels.cache.get(stats.bots).setName(`Bots: ${member.guild.members.cache.filter(m => m.user.bot).size}`);
 });
 
@@ -227,7 +227,6 @@ client.on('message', async msg => {
 		msg.delete({ timeout: 10000 });
 
 	}
-
 
 	if (msg.content === `${prefix}on`) {
 		if(msg.member.roles.cache.find(rol => rol.id === '832279343023390730' || '834919111359987762')) {
@@ -281,7 +280,6 @@ client.on('message', async msg => {
 			const embed = new MessageEmbed()
 				.setAuthor(`Informacion de ${user.tag}`, user.displayAvatarURL())
 				.setThumbnail(user.displayAvatarURL())
-				// .addField('Roles:', member.roles.map(r => `${r}`).join(' | '), true)
 				.addFields(
 					{
 						name: 'Nombre',
