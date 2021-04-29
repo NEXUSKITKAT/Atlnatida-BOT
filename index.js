@@ -187,11 +187,10 @@ client.on('message', async msg => {
 	if (msg.author.bot) return;
 
 	if (msg.content === `${prefix}help`) {
-		msg.channel.send(({ embed: {
+		msg.channel.send({ embed: {
 			color: 10181046,
-			description: `${prefix}ip  ${prefix}status  ${prefix}version`,
-		} }));
-		// msg.delete({ timeout: 10000, reason: 'Tiene que haber una!' });
+			description: `${prefix}ip  ${prefix}status  ${prefix}version  ${prefix}verificados`,
+		} });
 	}
 	if (msg.content === `${prefix}admin`) {
 		if(msg.member.roles.cache.find(rol => rol.id === '833682451288031242' || '834919111359987762')) {
@@ -231,10 +230,10 @@ client.on('message', async msg => {
 	if (msg.content === `${prefix}on`) {
 		if(msg.member.roles.cache.find(rol => rol.id === '832279343023390730' || '834919111359987762')) {
 			msg.delete({ timeout: 100, reason: 'Tiene que haber una!' });
-			msg.channel.send(({ embed: {
+			msg.channel.send({ embed: {
 				color: 3066993,
 				description: '✅ Server ON! ✅',
-			} }));
+			} });
 			msg.channel.send('<a:DualRing2:834103656763883542> @everyone <a:DualRing2:834103656763883542>');
 		}
 		else{
@@ -247,10 +246,10 @@ client.on('message', async msg => {
 	if (msg.content === `${prefix}re`) {
 		if(msg.member.roles.cache.find(rol => rol.id === '832279343023390730' || '834919111359987762')) {
 			msg.delete({ timeout: 100 });
-			msg.channel.send(({ embed: {
+			msg.channel.send({ embed: {
 				color: 10038562,
 				description: '❌ Server REINICIANDO! ❌',
-			} }));
+			} });
 			msg.channel.send('<a:DualRing3:834103677265903635> @everyone <a:DualRing3:834103677265903635>');
 			// <a:load:752072604550168656>
 		}
