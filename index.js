@@ -421,7 +421,7 @@ client.on('message', async msg => {
 	}, 3600000);
 
 	if(msg.content == `${prefix}verificados`) {
-		msg.channel.send(`Somos **${rolesmiembros.size}** miembros verificados	.`);
+		msg.channel.send(`Somos **${rolesmiembros.size}** miembros verificados.`);
 	}
 
 
