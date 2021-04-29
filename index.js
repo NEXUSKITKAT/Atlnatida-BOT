@@ -188,7 +188,7 @@ client.on('message', async msg => {
 
 	if (msg.content === `${prefix}help`) {
 		msg.channel.send({ embed: {
-			color: 10181046,
+			color: 3447003,
 			description: `${prefix}ip  ${prefix}status  ${prefix}version  ${prefix}verificados`,
 		} });
 	}
