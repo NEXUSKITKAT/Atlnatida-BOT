@@ -51,7 +51,6 @@ client.on('message', msg => {
 // ///////////////////// LOGS ////////////////////////////////////// //
 
 client.on('messageDelete', async message => {
-	// ignore direct messages
 	if (!message.guild) return;
 	const fetchedLogs = await message.guild.fetchAuditLogs({
 		limit: 1,
@@ -170,15 +169,15 @@ const stats = {
 client.on('guildMemberAdd', member => {
 	if(member.guild.id !== stats.serverID) return;
 	client.channels.cache.get(stats.total).setName(`Usuarios Totales: ${member.guild.memberCount}`);
-	client.channels.cache.get(stats.member).setName(`Miembros +16: ${member.guild.members.cache.filter(rol => rol.id === '832277915747614811').size}`);
 	client.channels.cache.get(stats.bots).setName(`Bots: ${member.guild.members.cache.filter(m => m.user.bot).size}`);
+	console.log(chalk.green('Actualizando contador'));
 });
 
 client.on('guildMemberRemove', member => {
 	if(member.guild.id !== stats.serverID) return;
 	client.channels.cache.get(stats.total).setName(`Usuarios Totales: ${member.guild.memberCount}`);
-	client.channels.cache.get(stats.member).setName(`Miembros +16: ${member.guild.members.cache.filter(rol => rol.id === '832277915747614811').size}`);
 	client.channels.cache.get(stats.bots).setName(`Bots: ${member.guild.members.cache.filter(m => m.user.bot).size}`);
+	console.log(chalk.green('Actualizando contador'));
 });
 
 // /////////////////////////////////////////////// TERMINA STATS /////////////////////////////////////////////////////////////////////// //
@@ -186,6 +185,7 @@ client.on('guildMemberRemove', member => {
 
 client.on('message', async msg => {
 	if (msg.author.bot) return;
+
 	if (msg.content === `${prefix}help`) {
 		msg.channel.send(({ embed: {
 			color: 10181046,
@@ -412,8 +412,19 @@ client.on('message', async msg => {
 			}).catch(console.error);
 		}
 	}
+	const rolesmiembros = msg.guild.roles.cache.get('832277915747614811').members;
+	const guild = client.guilds.cache.get('832277845157347398');
+	setInterval(() =>{
+		const channel = guild.channels.cache.get('833818503156465684');
+		channel.setName(`Miembros: ${rolesmiembros.size}`);
+		console.log('Updating Member Count');
+	}, 3600000);
+
+	if(msg.content == `${prefix}verificados`) {
+		msg.channel.send(`Somos **${rolesmiembros.size}** miembros verificados	.`);
+	}
+
 
 });
-
 
 client.login(token);
