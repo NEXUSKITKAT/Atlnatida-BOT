@@ -186,6 +186,7 @@ client.on('guildMemberRemove', member => {
 client.on('message', async msg => {
 	if (msg.author.bot) return;
 	const autorizado = msg.member.roles.cache.find(rol => rol.id === '832279343023390730' || '834919111359987762');
+	const rolesmiembros = msg.guild.roles.cache.get('832277915747614811').members;
 
 	if (msg.content === `${prefix}help`) {
 		msg.channel.send({ embed: {
@@ -273,7 +274,8 @@ client.on('message', async msg => {
 			const member = guild.members.cache.get(user.id);
 			const memberRoles = member.roles.cache
 				.filter((roles) => roles.id !== msg.guild.id)
-				.map((role) => role.toString());
+				.map((role) => role.toString())
+				.join(' ');
 
 			// console.log(member);
 
@@ -313,6 +315,70 @@ client.on('message', async msg => {
 						name: 'creado en',
 						value: guild.createdAt,
 					},*/
+				);
+
+			channel.send(embed);
+		}
+		else{
+			msg.channel.send('No Perteneces al equipo administrativo!').then(msg => {
+				msg.delete({ timeout: 10000 });
+			}).catch(console.error);
+			console.log(chalk.red(`Alguien probo usar el comando info ${msg.author}`));
+		}
+	}
+
+	if(msg.content.startsWith (`${prefix}serverinfo`)) {
+		if(autorizado) {
+
+			const members = msg.guild.members.cache;
+			const channels = msg.guild.channels.cache;
+
+
+			const serverIcon = msg.guild.iconURL ({ dynamic:true });
+			const { guild, channel } = msg;
+			// console.log(member);
+			let rolemap = msg.guild.roles.cache
+				.sort((a, b) => b.position - a.position)
+				.map(r => r)
+				.join(' ');
+			if (rolemap.length > 1024) rolemap = 'Demasiados roles para mostrar';
+			if (!rolemap) rolemap = 'No hay roles';
+
+			const embed = new MessageEmbed()
+				.setAuthor(`Informacion de ${msg.guild.name}`)
+				.setThumbnail(serverIcon)
+				.addField('Presenia', [
+					`**Online:** ${members.filter(member => member.presence.status === 'online').size}`,
+					`**Ausentes:** ${members.filter(member => member.presence.status === 'idle').size}`,
+					`**No molestar:** ${members.filter(member => member.presence.status === 'dnd').size}`,
+					`**Offline:** ${members.filter(member => member.presence.status === 'offline').size}`,
+					'\u200b',
+				])
+				.addFields(
+					{
+						name: 'Miembros verificados:',
+						value: rolesmiembros.size,
+					},
+					{
+						name: 'Total de bots:',
+						value: msg.guild.members.cache.filter(m => m.user.bot).size,
+					},
+					{
+						name: 'Total de canales de texto:',
+						value: channels.filter(channel => channel.type === 'text').size,
+					},
+					{
+						name: 'Total de canales de voz:',
+						value: channels.filter(channel => channel.type === 'voice').size,
+					},
+					{
+						name: 'Roles:',
+						value: rolemap,
+					},
+					{
+						name: 'Creado el:',
+						value: guild.createdAt,
+					},
 				);
 
 			channel.send(embed);
@@ -417,13 +483,12 @@ client.on('message', async msg => {
 			}).catch(console.error);
 		}
 	}
-	const rolesmiembros = msg.guild.roles.cache.get('832277915747614811').members;
 	const guild = client.guilds.cache.get('832277845157347398');
+	const channel = guild.channels.cache.get('833818503156465684');
 	setInterval(() =>{
-		const channel = guild.channels.cache.get('833818503156465684');
 		channel.setName(`Miembros +16: ${rolesmiembros.size}`);
 		console.log(chalk.green('Updating Member Count'));
-	}, 3600000);
+	}, 360000);
 
 	if(msg.content == `${prefix}verificados`) {
 		msg.channel.send(`Somos **${rolesmiembros.size}** miembros verificados.`);
