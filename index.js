@@ -119,8 +119,8 @@ client.on('guildBanAdd', async (guild, user) => {
 
 client.on('guildMemberAdd', async member => {
 	const canal = member.guild.channels.cache.find(c => c.name === '🛬ʙɪᴇɴᴠᴇɴɪᴅᴀ');
-	if(!canal) return;
 	const serverIcon = member.guild.iconURL ({ dynamic:true });
+	if(!canal) return;
 	const Embed = new Discord.MessageEmbed()
 		.setColor('#2DD5FF')
 		.setTitle(`Bienvenido a ${member.guild.name}`)
@@ -185,6 +185,7 @@ client.on('guildMemberRemove', member => {
 
 client.on('message', async msg => {
 	if (msg.author.bot) return;
+	const autorizado = msg.member.roles.cache.find(rol => rol.id === '832279343023390730' || '834919111359987762');
 
 	if (msg.content === `${prefix}help`) {
 		msg.channel.send({ embed: {
@@ -193,7 +194,7 @@ client.on('message', async msg => {
 		} });
 	}
 	if (msg.content === `${prefix}admin`) {
-		if(msg.member.roles.cache.find(rol => rol.id === '833682451288031242' || '834919111359987762')) {
+		if(autorizado) {
 			msg.channel.send(`**${prefix}laip / ${prefix}on / ${prefix}re / ${prefix}info / ${prefix}uptime / ${prefix}jugar** {Contenido}`);
 		}
 	}
@@ -203,8 +204,8 @@ client.on('message', async msg => {
 	}
 
 	if (msg.content === `${prefix}laip`) {
-		if(msg.member.roles.cache.find(rol => rol.id === '832279343023390730' || '834919111359987762')) {
-			msg.delete({ timeout: 100, reason: 'Tiene que haber una!' });
+		if(autorizado) {
+			msg.delete({ timeout: 100 });
 			msg.channel.send({ embed: {
 				color: 12320855,
 				description: '<a:DualRing1:834090756637458483> Pegar eso en el F8: **connect cfx.re/join/b6mjvb** <a:DualRing1:834090756637458483>',
@@ -216,7 +217,7 @@ client.on('message', async msg => {
 	}
 
 	if (msg.content === `${prefix}version`) {
-		msg.channel.send(bot_version);
+		msg.channel.send(`Version: ${bot_version}`);
 	}
 
 	if (msg.content === 'F') {
@@ -228,8 +229,8 @@ client.on('message', async msg => {
 	}
 
 	if (msg.content === `${prefix}on`) {
-		if(msg.member.roles.cache.find(rol => rol.id === '832279343023390730' || '834919111359987762')) {
-			msg.delete({ timeout: 100, reason: 'Tiene que haber una!' });
+		if(autorizado) {
+			msg.delete({ timeout: 100 });
 			msg.channel.send({ embed: {
 				color: 3066993,
 				description: '✅ Server ON! ✅',
@@ -244,7 +245,7 @@ client.on('message', async msg => {
 	}
 
 	if (msg.content === `${prefix}re`) {
-		if(msg.member.roles.cache.find(rol => rol.id === '832279343023390730' || '834919111359987762')) {
+		if(autorizado) {
 			msg.delete({ timeout: 100 });
 			msg.channel.send({ embed: {
 				color: 10038562,
@@ -264,7 +265,7 @@ client.on('message', async msg => {
 	const { MessageEmbed } = require('discord.js');
 
 	if(msg.content.startsWith (`${prefix}info`)) {
-		if(msg.member.roles.cache.find(rol => rol.id === '833682451288031242' || '834919111359987762')) {
+		if(autorizado) {
 
 			const { guild, channel } = msg;
 
@@ -342,6 +343,11 @@ client.on('message', async msg => {
 			await msgEmbed.react('👍');
 			await msgEmbed.react('👎');
 		}
+		else{
+			msg.channel.send('**La sugerencia no puede estar vacia!**').then(msg => {
+				msg.delete({ timeout: 10000 });
+			}).catch(console.error);
+		}
 		msg.delete({ timeout: 100 });
 	}
 
@@ -374,7 +380,7 @@ client.on('message', async msg => {
 		}
 	}
 
-	if(msg.content.startsWith(`${prefix}server`)) {
+	if(msg.content.startsWith(`${prefix}conatador`)) {
 		if (msg.author.id === '575698626739699728') {
 
 			client.guilds.cache.forEach((guild) => {
@@ -402,7 +408,7 @@ client.on('message', async msg => {
 	const uptime = `Activo durante: ${days} dias, ${hours} horas, ${minutes} minutos y ${seconds} segundos`;
 
 	if (msg.content === `${prefix}uptime`) {
-		if(msg.member.roles.cache.find(rol => rol.id === '833682451288031242' || '834919111359987762')) {
+		if(autorizado) {
 			msg.channel.send(uptime);
 		}
 		else{
@@ -415,8 +421,8 @@ client.on('message', async msg => {
 	const guild = client.guilds.cache.get('832277845157347398');
 	setInterval(() =>{
 		const channel = guild.channels.cache.get('833818503156465684');
-		channel.setName(`Miembros: ${rolesmiembros.size}`);
-		console.log('Updating Member Count');
+		channel.setName(`Miembros +16: ${rolesmiembros.size}`);
+		console.log(chalk.green('Updating Member Count'));
 	}, 3600000);
 
 	if(msg.content == `${prefix}verificados`) {
