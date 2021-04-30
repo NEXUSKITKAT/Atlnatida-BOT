@@ -388,7 +388,7 @@ client.on('message', async msg => {
 	}
 
 	if(msg.author.bot || msg.channel.type === 'dm') return;
-	// if(msg.member.roles.cache.find(rol => rol.id === '833682451288031242' || '834919111359987762')) {
+	// if(autorizado')) {
 	const messageArray = msg.content.split(' ');
 	const cmd = messageArray[0];
 	const args = messageArray.slice(1);
