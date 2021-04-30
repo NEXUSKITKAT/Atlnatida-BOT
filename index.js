@@ -311,10 +311,6 @@ client.on('message', async msg => {
 						name: 'Roles',
 						value: memberRoles,
 					},
-					/* {
-						name: 'creado en',
-						value: guild.createdAt,
-					},*/
 				);
 
 			channel.send(embed);
