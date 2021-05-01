@@ -399,18 +399,24 @@ client.on('message', async msg => {
 
 	if (cmd === `${prefix}sugerencia`) {
 		const pollDescription = args.slice(0).join(' ');
-
-		const embedPoll = new Discord.MessageEmbed()
-			.setTitle('💯 Sugerencia! 💯')
-			.setDescription(pollDescription)
-			.setColor('BLUE');
-		if(pollDescription !== null && pollDescription !== '') {
-			const msgEmbed = await msg.channel.send(embedPoll);
-			await msgEmbed.react('👍');
-			await msgEmbed.react('👎');
+		if (msg.channel.id === '832362060209717290') {
+			const embedPoll = new Discord.MessageEmbed()
+				.setTitle('💯 Sugerencia! 💯')
+				.setDescription(pollDescription)
+				.setColor('BLUE');
+			if(pollDescription !== null && pollDescription !== '') {
+				const msgEmbed = await msg.channel.send(embedPoll);
+				await msgEmbed.react('👍');
+				await msgEmbed.react('👎');
+			}
+			else{
+				msg.channel.send('**La sugerencia no puede estar vacia!**').then(msg => {
+					msg.delete({ timeout: 10000 });
+				}).catch(console.error);
+			}
 		}
 		else{
-			msg.channel.send('**La sugerencia no puede estar vacia!**').then(msg => {
+			msg.reply('Las sugerencias van en el canal de: <#832362060209717290>').then(msg => {
 				msg.delete({ timeout: 10000 });
 			}).catch(console.error);
 		}
