@@ -126,7 +126,7 @@ client.on('guildMemberAdd', async member => {
 		.setTitle(`Bienvenido a ${member.guild.name}`)
 		.setURL('https://youtu.be/F0lynllSosw')
 		.setAuthor(member.user.username, member.user.displayAvatarURL())
-		.setDescription(`Bienvenido <@${member.user.id}> estamos encantados de que quieras formar parte de la comunidad **Atlantida RP**! Podrás ser parte de la comunidad y acceder el servidor una vez hayas realizado la verificación por voz. Infórmate en <#832289348983586867>`)
+		.setDescription(`Bienvenido <@${member.user.id}> estamos encantados de que quieras formar parte de la comunidad **Atlantida RP**!`)
 		.setThumbnail(serverIcon)
 		.addField('No olvides de leer la normativa', 'Disfruta tu estancia en Atlantida RP', true)
 		.setTimestamp()
@@ -137,7 +137,7 @@ client.on('guildMemberAdd', async member => {
 });
 
 client.on('guildMemberAdd', async member => {
-	member.send('Bienvenido, estamos encantados de que quieras formar parte de la comunidad **Atlantida RP**. Podrás ser parte de la comunidad y acceder al servidor una vez hayas realizado la verificación por voz, infórmate en <#832289348983586867> ');
+	member.send('Bienvenido, estamos encantados de que quieras formar parte de la comunidad **Atlantida RP**. Disfruta tu estancia\nNo olvides de leer la normativa en:<#832335511439147090> ');
 });
 
 client.on('guildMemberRemove', async member => {
@@ -188,10 +188,14 @@ client.on('message', async msg => {
 	const autorizado = msg.member.roles.cache.find(rol => rol.id === '832279343023390730' || '834919111359987762');
 	const rolesmiembros = msg.guild.roles.cache.get('832277915747614811').members;
 
+	if (msg.content === '<@!833802979499966519>') {
+		msg.channel.send(`**${prefix}help** para ayuda`);
+	}
+
 	if (msg.content === `${prefix}help`) {
 		msg.channel.send({ embed: {
 			color: 3447003,
-			description: `${prefix}ip  ${prefix}status  ${prefix}version  ${prefix}verificados`,
+			description: `${prefix}ip  ${prefix}version  ${prefix}verificados`,
 		} });
 	}
 	if (msg.content === `${prefix}admin`) {
@@ -343,7 +347,7 @@ client.on('message', async msg => {
 			const embed = new MessageEmbed()
 				.setAuthor(`Informacion de ${msg.guild.name}`)
 				.setThumbnail(serverIcon)
-				.addField('Presenia', [
+				.addField('Presencia', [
 					`**Online:** ${members.filter(member => member.presence.status === 'online').size}`,
 					`**Ausentes:** ${members.filter(member => member.presence.status === 'idle').size}`,
 					`**No molestar:** ${members.filter(member => member.presence.status === 'dnd').size}`,
@@ -483,8 +487,8 @@ client.on('message', async msg => {
 	const channel = guild.channels.cache.get('833818503156465684');
 	setInterval(() =>{
 		channel.setName(`Miembros +16: ${rolesmiembros.size}`);
-		console.log(chalk.green('Updating Member Count'));
-	}, 360000);
+		// console.log(chalk.green('Updating Member Count'));
+	}, 36000);
 
 	if(msg.content == `${prefix}verificados`) {
 		msg.channel.send(`Somos **${rolesmiembros.size}** miembros verificados.`);
