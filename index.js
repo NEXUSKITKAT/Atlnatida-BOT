@@ -133,12 +133,11 @@ client.on('guildMemberAdd', async member => {
 		.setFooter('ATLANTIDA RP©');
 
 	canal.send(Embed);
-
-});
-
-client.on('guildMemberAdd', async member => {
 	member.send('Bienvenido, estamos encantados de que quieras formar parte de la comunidad **Atlantida RP**. Disfruta tu estancia\nNo olvides de leer la normativa en:<#832335511439147090> ');
+	console.log(chalk.bgGreen(`${member.user.tag} entro al Server`));
+
 });
+
 
 client.on('guildMemberRemove', async member => {
 	const canal = member.guild.channels.cache.find(c => c.name === '🛫ꜱᴀʟɪᴅᴀꜱ');
