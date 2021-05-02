@@ -204,7 +204,7 @@ client.on('message', async msg => {
 	}
 	if (msg.content.toLowerCase() === `${prefix}admin`) {
 		if(autirizado || MOD || Abuelo) {
-			msg.channel.send(`**${prefix}laip / ${prefix}on / ${prefix}re / ${prefix}info / ${prefix}uptime / ${prefix}jugar** {Contenido}`);
+			msg.channel.send(`**${prefix}laip / ${prefix}on / ${prefix}re / ${prefix}info / ${prefix}uptime / ${prefix}jugar** {Contenido} / Presencia (${prefix}online ${prefix}ausente ${prefix}ocupado ${prefix}invisible)`);
 		}
 	}
 
@@ -246,6 +246,7 @@ client.on('message', async msg => {
 
 	if (msg.content.toLowerCase() === `${prefix}on`) {
 		if(autirizado || MOD || Abuelo) {
+			client.user.setStatus('online');
 			msg.delete({ timeout: 100 });
 			msg.channel.send({ embed: {
 				color: 3066993,
@@ -263,6 +264,7 @@ client.on('message', async msg => {
 	if (msg.content.toLowerCase() === `${prefix}re`) {
 		if(autirizado || MOD || Abuelo) {
 			msg.delete({ timeout: 100 });
+			client.user.setStatus('dnd');
 			msg.channel.send({ embed: {
 				color: 10038562,
 				description: '❌ Server REINICIANDO! ❌',
