@@ -204,7 +204,7 @@ client.on('message', async msg => {
 	}
 	if (msg.content.toLowerCase() === `${prefix}admin`) {
 		if(autirizado || MOD || Abuelo) {
-			msg.channel.send(`**${prefix}laip / ${prefix}on / ${prefix}re / ${prefix}info / ${prefix}uptime / ${prefix}jugar** {Contenido} / Presencia ( **${prefix}online ${prefix}ausente ${prefix}ocupado ${prefix}invisible**)`);
+			msg.channel.send(`**${prefix}laip / ${prefix}on / ${prefix}re / ${prefix}info / ${prefix}serverinfo / ${prefix}uptime / ${prefix}jugar** {Contenido} / Presencia ( **${prefix}online ${prefix}ausente ${prefix}ocupado ${prefix}invisible**)`);
 		}
 	}
 
