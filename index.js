@@ -26,7 +26,7 @@ client.on('message', async message => {
 });
 
 client.on('message', msg => {
-	if(msg.content.toLowerCase().startsWith(`${prefix}jugar`)) {
+	if(msg.content.startsWith(`${prefix}jugar`)) {
 		if(msg.member.roles.cache.find(rol => rol.id === '833682451288031242' || '834919111359987762')) {
 			const content = msg.content.toLowerCase().replace(`${prefix}jugar`, ' ');
 			// "{prefix}jugar hello world" -> "hello world"
@@ -64,10 +64,10 @@ client.on('messageDelete', async message => {
 	const { executor, target } = deletionLog;
 
 	if (target.id === message.author.id) {
-		console.log(chalk.bold.red(`El mensaje de ${message.author.tag} fue borrado por ${executor.tag}. El contenido fue ${message.content}`));
+		console.log(chalk.bold.red(`El mensaje de ${message.author.tag} fue borrado por ${executor.tag}. El contenido fue: ${message.content}`));
 	}
 	else {
-		console.log(chalk.bold.yellow(`${message.author.tag} Borro su mensaje. El contenido fue ${message.content}`));
+		console.log(chalk.bold.yellow(`${message.author.tag} Borro su mensaje. El contenido fue: ${message.content}`));
 	}
 });
 
@@ -79,7 +79,7 @@ client.on('guildMemberRemove', async member => {
 
 	const kickLog = fetchedLogs.entries.first();
 
-	if (!kickLog) return console.log(chalk.bold.pink(chalk.bgGreen(`${member.user.tag} abandonaron el asunto, muy probablemente por su propia voluntad.`)));
+	if (!kickLog) return console.log(chalk.bold.pink(chalk.bgGreen(`${member.user.tag} abandonaron el server, muy probablemente por su propia voluntad.`)));
 
 	const { executor, target } = kickLog;
 
@@ -557,6 +557,14 @@ client.on('message', async msg => {
 	if(msg.content.toLowerCase() == `${prefix}verificados`) {
 		msg.channel.send(`Somos **${rolesmiembros.size}** miembros verificados.`);
 	}
+
+	/* const today = new Date().getHours();
+	if (today >= 10 && today <= 4) {
+		client.user.setStatus('online');
+	}
+	else {
+		client.user.setStatus('idle');
+	}*/
 
 
 });
