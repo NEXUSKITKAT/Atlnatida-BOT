@@ -3,6 +3,7 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
 const chalk = require('chalk');
+const Logs = require('./logs');
 require('console-stamp')(console, {
 	format: ':date(dd/mm/yy ~ HH:MM:ss)',
 });
@@ -15,13 +16,9 @@ client.on('ready', () => {
 	console.log(bot_version);
 	console.log('El prefijo es: ' + chalk.green(prefix));
 	console.log(chalk.green('[✓] Todo Ejecutado correctamente!'));
+	Logs(client);
 });
 // ✓
-client.on('message', async message => {
-	if(message.author.bot) return;
-	console.log(`${message.author.tag} said: ${message.content}`);
-
-});
 
 client.on('message', msg => {
 	if(msg.content.startsWith(`${prefix}jugar`)) {
@@ -46,73 +43,6 @@ client.on('message', msg => {
 // ////////////////////// TERMINA INICIO //////////////////////////// //
 
 
-// ///////////////////// LOGS ////////////////////////////////////// //
-
-client.on('messageDelete', async message => {
-	if (!message.guild) return;
-	const fetchedLogs = await message.guild.fetchAuditLogs({
-		limit: 1,
-		type: 'MESSAGE_DELETE',
-	});
-
-	const deletionLog = fetchedLogs.entries.first();
-
-	if (!deletionLog) return console.log(chalk.green(`El mensaje de ${message.author.tag} se eliminó, pero no se encontraron registros de auditoría relevantes.`));
-
-	const { executor, target } = deletionLog;
-
-	if (target.id === message.author.id) {
-		console.log(chalk.bold.red(`El mensaje de ${message.author.tag} fue borrado por ${executor.tag}. El contenido fue: ${message.content}`));
-	}
-	else {
-		console.log(chalk.bold.yellow(`${message.author.tag} Borro su mensaje. El contenido fue: ${message.content}`));
-	}
-});
-
-client.on('guildMemberRemove', async member => {
-	const fetchedLogs = await member.guild.fetchAuditLogs({
-		limit: 1,
-		type: 'MEMBER_KICK',
-	});
-
-	const kickLog = fetchedLogs.entries.first();
-
-	if (!kickLog) return console.log(chalk.bold.pink(chalk.bgGreen(`${member.user.tag} abandonaron el server, muy probablemente por su propia voluntad.`)));
-
-	const { executor, target } = kickLog;
-
-	if (target.id === member.id) {
-		console.log(chalk.bold.yellow(`${member.user.tag}`) + (chalk.blueBright) `ha dejado el asunto; ` + (chalk.bold.bgRed) `kicked by:${executor.tag}`);
-	}
-	else {
-		console.log(chalk.bgRed(`${member.user.tag} abandonó el server, la búsqueda del registro de auditoría no fue concluyente.`));
-	}
-});
-
-client.on('guildBanAdd', async (guild, user) => {
-	const fetchedLogs = await guild.fetchAuditLogs({
-		limit: 1,
-		type: 'MEMBER_BAN_ADD',
-	});
-
-	const banLog = fetchedLogs.entries.first();
-
-	if (!banLog) return console.log(chalk.bgYellow(`${user.tag} fue baneado ${guild.name} pero no se pudo encontrar ningún registro de auditoría.`));
-
-	const { executor, target } = banLog;
-
-
-	if (target.id === user.id) {
-		console.log(chalk.bgRed(`${user.tag} obtuvo el martillazo de la justicia ${guild.name}, el que lo dio fue ${executor.tag}`));
-	}
-	else {
-		console.log(chalk.bgCyan(`${user.tag}`)` obtuvo el martillazo de la justicia ${guild.name}, el registro de auditoría no fue concluyente.`);
-	}
-});
-
-// ////////////////////////// TERMINA lOGS /////////////////////////////////// //
-
-
 // ///////////////////////// MENSAJE DE BIENVENIDA /////////////////////////// //
 
 client.on('guildMemberAdd', async member => {
@@ -128,10 +58,10 @@ client.on('guildMemberAdd', async member => {
 		.setThumbnail(serverIcon)
 		.addField('No olvides de leer la normativa', 'Disfruta tu estancia en Atlantida RP', true)
 		.setTimestamp()
-		.setFooter('ATLANTIDA RP©');
+		.setFooter(member.guild.name);
 
 	canal.send(Embed);
-	member.send('Bienvenido, estamos encantados de que quieras formar parte de la comunidad **Atlantida RP**. Disfruta tu estancia\nNo olvides de leer la normativa en:<#832335511439147090> ');
+	member.send('Bienvenido, estamos encantados de que quieras formar parte de la comunidad **Atlantida RP**. Disfruta tu estancia.\nNo olvides de leer la normativa en:<#832335511439147090> \n **Verificate en <#840631476335804456>**');
 	console.log(chalk.bgGreen(`${member.user.tag} entro al Server`));
 
 });
@@ -146,8 +76,7 @@ client.on('guildMemberRemove', async member => {
 		.setAuthor(member.user.tag, member.user.displayAvatarURL())
 		.setThumbnail(member.user.displayAvatarURL({ dynamic:true, size: 128 }))
 		.setTimestamp()
-		.setFooter('ATLANTIDA RP');
-
+		.setFooter(member.guild.name);
 	canal.send(Embed);
 
 });
@@ -202,7 +131,7 @@ client.on('message', async msg => {
 	}
 	if (msg.content.toLowerCase() === `${prefix}admin`) {
 		if(autirizado || MOD || Abuelo) {
-			msg.channel.send(`**${prefix}laip / ${prefix}on / ${prefix}re / ${prefix}info / ${prefix}serverinfo / ${prefix}uptime / ${prefix}jugar** {Contenido} / Presencia ( **${prefix}online ${prefix}ausente ${prefix}ocupado ${prefix}invisible**)`);
+			msg.channel.send(`**${prefix}laip / ${prefix}on / ${prefix}re / ${prefix}info / ${prefix}serverinfo / ${prefix}uptime / ${prefix}jugar** {Contenido} / Presencia ( **${prefix}online ${prefix}ausente ${prefix}ocupado ${prefix}invisible**) / ${prefix}cc [Numero de mensajes deseados a borrar]`);
 		}
 	}
 
@@ -548,7 +477,7 @@ client.on('message', async msg => {
 	const guild = client.guilds.cache.get('832277845157347398');
 	const channel = guild.channels.cache.get('833818503156465684');
 	setInterval(() =>{
-		channel.setName(`Miembros +16: ${rolesmiembros.size}`);
+		channel.setName(`Verificados: ${rolesmiembros.size}`);
 		// console.log(chalk.green('Updating Member Count'));
 	}, 36000);
 
@@ -556,19 +485,52 @@ client.on('message', async msg => {
 		msg.channel.send(`Somos **${rolesmiembros.size}** miembros verificados.`);
 	}
 
-	/* const today = new Date().getHours();
-	if (today >= 10 && today <= 4) {
-		client.user.setStatus('online');
+
+	if (autirizado || MOD || Abuelo) {
+		if(msg.content.toLowerCase() == `${prefix}veri`) {
+
+			const Embed = new Discord.MessageEmbed()
+				.setColor('#1CFF0F')
+				.setTitle('✓ Verificate ✓')
+				.setDescription('Reacciona al emoji ✅ y obtén el rol de <@&832277915747614811>')
+				.setFooter('Pasalo bien en nuestro servidor de RP.   Att: El Equipo administrativo');
+
+			const msgEmbed = await msg.channel.send(Embed);
+			msgEmbed.react('✅');
+		}
 	}
-	else {
-		client.user.setStatus('idle');
-	}*/
-
-	const today = new Date();
-
-	const time = today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
-	if(msg.content.toLowerCase() == `${prefix}hora`) {
-		msg.channel.send(time);
+	const argus = msg.content.slice(prefix.length).trim().split(/ +/g);
+	const command = argus.shift().toLowerCase();
+	if (command === 'cc') {
+		if (autirizado || Abuelo || MOD) {
+			let num1 = argus[0];
+			if(isNaN(num1)) {
+				msg.delete({ timeout: 100 });
+				msg.reply('Pon un numero no letras. **Vaya admin!!**').then(msg => {
+					msg.delete({ timeout: 5000 });
+				});
+			}
+			else if(num1 !== null && num1 !== '') {
+				num1++;
+				msg.channel.bulkDelete(num1);
+				num1--;
+				msg.reply(`Borre ${num1} mensajes!`).then(msg => {
+					msg.delete({ timeout: 5000 });
+				});
+			}
+			else{
+				msg.delete({ timeout: 100 });
+				msg.reply('Especifica un numero!!!').then(msg => {
+					msg.delete({ timeout: 5000 });
+				});
+			}
+		}
+		else{
+			msg.delete({ timeout: 100 });
+			msg.reply('**No Perteneces al equipo administrativo!**').then(msg => {
+				msg.delete({ timeout: 5000 });
+			});
+		}
 	}
 
 
