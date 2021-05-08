@@ -12,13 +12,11 @@ const { token, prefix, bot_version } = require('./config.json');
 client.on('ready', () => {
 	console.log(chalk.bold.magenta(`Online  ${client.user.tag}!`));
 	client.user.setActivity('Atlatinda RP', { type: 'PLAYING' });
-});
-
-client.once('ready', () => {
 	console.log(bot_version);
 	console.log('El prefijo es: ' + chalk.green(prefix));
+	console.log(chalk.green('[✓] Todo Ejecutado correctamente!'));
 });
-
+// ✓
 client.on('message', async message => {
 	if(message.author.bot) return;
 	console.log(`${message.author.tag} said: ${message.content}`);
@@ -28,7 +26,7 @@ client.on('message', async message => {
 client.on('message', msg => {
 	if(msg.content.startsWith(`${prefix}jugar`)) {
 		if(msg.member.roles.cache.find(rol => rol.id === '833682451288031242' || '834919111359987762')) {
-			const content = msg.content.toLowerCase().replace(`${prefix}jugar`, ' ');
+			const content = msg.content.replace(`${prefix}jugar`, ' ');
 			// "{prefix}jugar hello world" -> "hello world"
 
 			client.user.setPresence({
@@ -221,7 +219,7 @@ client.on('message', async msg => {
 			} });
 		}
 		else{
-			msg.channel.send('Tu no puedes!');
+			msg.channel.send('No Perteneces al equipo administrativo!');
 		}
 	}
 
@@ -255,7 +253,7 @@ client.on('message', async msg => {
 			msg.channel.send('<a:DualRing2:834103656763883542> @everyone <a:DualRing2:834103656763883542>');
 		}
 		else{
-			msg.channel.send('Tu no puedes!').then(msg => {
+			msg.reply('No Perteneces al equipo administrativo!').then(msg => {
 				msg.delete({ timeout: 10000 });
 			}).catch(console.error);
 		}
@@ -273,7 +271,7 @@ client.on('message', async msg => {
 			// <a:load:752072604550168656>
 		}
 		else{
-			msg.channel.send('No Perteneces al equipo administrativo!').then(msg => {
+			msg.reply('No Perteneces al equipo administrativo!').then(msg => {
 				msg.delete({ timeout: 10000 });
 			}).catch(console.error);
 		}
@@ -565,6 +563,13 @@ client.on('message', async msg => {
 	else {
 		client.user.setStatus('idle');
 	}*/
+
+	const today = new Date();
+
+	const time = today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
+	if(msg.content.toLowerCase() == `${prefix}hora`) {
+		msg.channel.send(time);
+	}
 
 
 });
