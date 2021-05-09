@@ -80,7 +80,15 @@ client.on('message', async msg => {
 	}
 
 	if (msg.content.toLowerCase() === `${prefix}ip`) {
-		msg.channel.send('**Para entrar al volcán pulsa F8 y escribe: connect cfx.re/join/b6mjvb**');
+		if(autirizado || MOD || Abuelo) {
+			msg.channel.send({ embed: {
+				color: 12320855,
+				description: '<a:DualRing1:834090756637458483> Pegar eso en el F8: **connect cfx.re/join/b6mjvb** <a:DualRing1:834090756637458483>',
+			} });
+		}
+		else{
+			msg.channel.send('**Para entrar al volcán pulsa F8 y escribe: connect cfx.re/join/b6mjvb**');
+		}
 	}
 
 	if (msg.content.toLowerCase() === `${prefix}version`) {
@@ -138,20 +146,7 @@ client.on('message', async msg => {
 
 	if (msg.content.toLowerCase() === `${prefix}admin`) {
 		if(autirizado || MOD || Abuelo) {
-			msg.channel.send(`**${prefix}laip / ${prefix}on / ${prefix}re / ${prefix}info / ${prefix}serverinfo / ${prefix}uptime / ${prefix}jugar** {Contenido} / Presencia ( **${prefix}online ${prefix}ausente ${prefix}ocupado ${prefix}invisible**) / **${prefix}cc** [Numero de mensajes deseados a borrar]`);
-		}
-	}
-
-	if (msg.content.toLowerCase() === `${prefix}laip`) {
-		if(autirizado || MOD || Abuelo) {
-			msg.delete({ timeout: 100 });
-			msg.channel.send({ embed: {
-				color: 12320855,
-				description: '<a:DualRing1:834090756637458483> Pegar eso en el F8: **connect cfx.re/join/b6mjvb** <a:DualRing1:834090756637458483>',
-			} });
-		}
-		else{
-			msg.channel.send('No Perteneces al equipo administrativo!');
+			msg.channel.send(`**${prefix}on / ${prefix}re / ${prefix}info / ${prefix}serverinfo / ${prefix}uptime / ${prefix}jugar** {Contenido} / Presencia ( **${prefix}online ${prefix}ausente ${prefix}ocupado ${prefix}invisible**) / **${prefix}cc** [Numero de mensajes deseados a borrar]`);
 		}
 	}
 
