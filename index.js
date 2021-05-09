@@ -62,7 +62,7 @@ client.on('message', msg => {
 
 
 client.on('message', async msg => {
-	if (msg.author.bot) return;
+	if (msg.author.bot || msg.channel.type === 'dm') return;
 
 	const autirizado = msg.member.roles.cache.find(rol => rol.id === '832279343023390730');
 	const MOD = msg.member.roles.cache.find(rol => rol.id === '834919111359987762');
