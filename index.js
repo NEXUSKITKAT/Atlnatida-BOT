@@ -29,7 +29,6 @@ client.on('message', msg => {
 	if(msg.content.startsWith(`${prefix}jugar`)) {
 		if(msg.member.roles.cache.find(rol => rol.id === '833682451288031242' || '834919111359987762')) {
 			const content = msg.content.replace(`${prefix}jugar`, ' ');
-			// "{prefix}jugar hello world" -> "hello world"
 
 			client.user.setPresence({
 				activity: {
@@ -134,6 +133,8 @@ client.on('message', async msg => {
 		}
 		msg.delete({ timeout: 100 });
 	}
+
+	// ///////////////////////////////////////////                      ADMIN                /////////////
 
 	if (msg.content.toLowerCase() === `${prefix}admin`) {
 		if(autirizado || MOD || Abuelo) {
@@ -357,7 +358,12 @@ client.on('message', async msg => {
 			}).catch(console.error);
 		}
 	}
-
+	if (msg.content.toLowerCase() === `${prefix}presencia`) {
+		const members = msg.guild.members.cache;
+		if (autirizado || MOD || Abuelo) {
+			msg.channel.send(`**Online:** ${members.filter(member => member.presence.status === 'online').size}\n**Ausentes:** ${members.filter(member => member.presence.status === 'idle').size}\n**No molestar:** ${members.filter(member => member.presence.status === 'dnd').size}\n**Offline:** ${members.filter(member => member.presence.status === 'offline').size}`);
+		}
+	}
 	let totalSeconds = (client.uptime / 1000);
 	const days = Math.floor(totalSeconds / 86400);
 	totalSeconds %= 86400;
