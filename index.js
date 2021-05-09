@@ -50,7 +50,7 @@ client.on('message', msg => {
 	const channel = guild.channels.cache.get('833818503156465684');
 	setInterval(() =>{
 		channel.setName(`Verificados: ${rolesmiembros.size}`);
-		console.log(chalk.green('Updating Member Count'));
+		// console.log(chalk.green('Updating Member Count'));
 	}, 60000);
 
 	if(msg.content.toLowerCase() == `${prefix}verificados`) {
