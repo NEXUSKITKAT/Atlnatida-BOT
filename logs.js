@@ -1,4 +1,3 @@
-// ///////////////////// LOGS ////////////////////////////////////// //
 const chalk = require('chalk');
 module.exports = (client) => {
 	client.on('message', async message => {
@@ -69,5 +68,3 @@ module.exports = (client) => {
 		}
 	});
 };
-
-// ////////////////////////// TERMINA lOGS /////////////////////////////////// //

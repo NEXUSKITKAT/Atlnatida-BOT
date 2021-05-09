@@ -4,6 +4,7 @@ const Discord = require('discord.js');
 const client = new Discord.Client();
 const chalk = require('chalk');
 const Logs = require('./logs');
+const Welkome = require('./bienvenida-stats');
 require('console-stamp')(console, {
 	format: ':date(dd/mm/yy ~ HH:MM:ss)',
 });
@@ -16,11 +17,15 @@ client.on('ready', () => {
 	console.log(bot_version);
 	console.log('El prefijo es: ' + chalk.green(prefix));
 	console.log(chalk.green('[✓] Todo Ejecutado correctamente!'));
+
 	Logs(client);
+	Welkome(client);
+
 });
 // ✓
 
 client.on('message', msg => {
+	if (msg.author.bot || msg.channel.type === 'dm') return;
 	if(msg.content.startsWith(`${prefix}jugar`)) {
 		if(msg.member.roles.cache.find(rol => rol.id === '833682451288031242' || '834919111359987762')) {
 			const content = msg.content.replace(`${prefix}jugar`, ' ');
@@ -38,75 +43,23 @@ client.on('message', msg => {
 			}).catch(console.error);
 		}
 	}
+
+	const rolesmiembros = msg.guild.roles.cache.get('832277915747614811').members;
+
+	const guild = client.guilds.cache.get('832277845157347398');
+	const channel = guild.channels.cache.get('833818503156465684');
+	setInterval(() =>{
+		channel.setName(`Verificados: ${rolesmiembros.size}`);
+		console.log(chalk.green('Updating Member Count'));
+	}, 60000);
+
+	if(msg.content.toLowerCase() == `${prefix}verificados`) {
+		msg.channel.send(`Somos **${rolesmiembros.size}** miembros verificados.`);
+	}
+
 });
 
 // ////////////////////// TERMINA INICIO //////////////////////////// //
-
-
-// ///////////////////////// MENSAJE DE BIENVENIDA /////////////////////////// //
-
-client.on('guildMemberAdd', async member => {
-	const canal = member.guild.channels.cache.find(c => c.name === '🛬ʙɪᴇɴᴠᴇɴɪᴅᴀ');
-	const serverIcon = member.guild.iconURL ({ dynamic:true });
-	if(!canal) return;
-	const Embed = new Discord.MessageEmbed()
-		.setColor('#2DD5FF')
-		.setTitle(`Bienvenido a ${member.guild.name}`)
-		.setURL('https://youtu.be/F0lynllSosw')
-		.setAuthor(member.user.username, member.user.displayAvatarURL())
-		.setDescription(`Bienvenido <@${member.user.id}> estamos encantados de que quieras formar parte de la comunidad **Atlantida RP**!`)
-		.setThumbnail(serverIcon)
-		.addField('No olvides de leer la normativa', 'Disfruta tu estancia en Atlantida RP', true)
-		.setTimestamp()
-		.setFooter(member.guild.name);
-
-	canal.send(Embed);
-	member.send('Bienvenido, estamos encantados de que quieras formar parte de la comunidad **Atlantida RP**. Disfruta tu estancia.\nNo olvides de leer la normativa en:<#832335511439147090> \n **Verificate en <#840631476335804456>**');
-	console.log(chalk.bgGreen(`${member.user.tag} entro al Server`));
-
-});
-
-
-client.on('guildMemberRemove', async member => {
-	const canal = member.guild.channels.cache.find(c => c.name === '🛫ꜱᴀʟɪᴅᴀꜱ');
-	if(!canal) return;
-	const Embed = new Discord.MessageEmbed()
-		.setColor('#EC1919')
-		.setDescription(`<@${member.user.id}> **se fue.**`)
-		.setAuthor(member.user.tag, member.user.displayAvatarURL())
-		.setThumbnail(member.user.displayAvatarURL({ dynamic:true, size: 128 }))
-		.setTimestamp()
-		.setFooter(member.guild.name);
-	canal.send(Embed);
-
-});
-
-// /////////////////////////////////////////////// TERMINA BIENVENIDA ////////////////////////////////////////////////////// //
-
-// ////////////////////////// STATS //////////////////////////// //
-
-const stats = {
-	serverID: '832277845157347398',
-	total: '833818248116961280',
-	member:'833818503156465684',
-	bots:'833818644139606027',
-};
-
-client.on('guildMemberAdd', member => {
-	if(member.guild.id !== stats.serverID) return;
-	client.channels.cache.get(stats.total).setName(`Usuarios Totales: ${member.guild.memberCount}`);
-	client.channels.cache.get(stats.bots).setName(`Bots: ${member.guild.members.cache.filter(m => m.user.bot).size}`);
-	console.log(chalk.green('Actualizando contador'));
-});
-
-client.on('guildMemberRemove', member => {
-	if(member.guild.id !== stats.serverID) return;
-	client.channels.cache.get(stats.total).setName(`Usuarios Totales: ${member.guild.memberCount}`);
-	client.channels.cache.get(stats.bots).setName(`Bots: ${member.guild.members.cache.filter(m => m.user.bot).size}`);
-	console.log(chalk.green('Actualizando contador'));
-});
-
-// /////////////////////////////////////////////// TERMINA STATS /////////////////////////////////////////////////////////////////////// //
 
 
 client.on('message', async msg => {
@@ -115,9 +68,6 @@ client.on('message', async msg => {
 	const autirizado = msg.member.roles.cache.find(rol => rol.id === '832279343023390730');
 	const MOD = msg.member.roles.cache.find(rol => rol.id === '834919111359987762');
 	const Abuelo = msg.member.roles.cache.find(rol => rol.id === '833682451288031242');
-
-
-	const rolesmiembros = msg.guild.roles.cache.get('832277915747614811').members;
 
 	if (msg.content.toLowerCase() === '<@!833802979499966519>') {
 		msg.channel.send(`**${prefix}help** para ayuda`);
@@ -129,27 +79,9 @@ client.on('message', async msg => {
 			description: `${prefix}ip  ${prefix}version  ${prefix}verificados`,
 		} });
 	}
-	if (msg.content.toLowerCase() === `${prefix}admin`) {
-		if(autirizado || MOD || Abuelo) {
-			msg.channel.send(`**${prefix}laip / ${prefix}on / ${prefix}re / ${prefix}info / ${prefix}serverinfo / ${prefix}uptime / ${prefix}jugar** {Contenido} / Presencia ( **${prefix}online ${prefix}ausente ${prefix}ocupado ${prefix}invisible**) / ${prefix}cc [Numero de mensajes deseados a borrar]`);
-		}
-	}
 
 	if (msg.content.toLowerCase() === `${prefix}ip`) {
 		msg.channel.send('**Para entrar al volcán pulsa F8 y escribe: connect cfx.re/join/b6mjvb**');
-	}
-
-	if (msg.content.toLowerCase() === `${prefix}laip`) {
-		if(autirizado || MOD || Abuelo) {
-			msg.delete({ timeout: 100 });
-			msg.channel.send({ embed: {
-				color: 12320855,
-				description: '<a:DualRing1:834090756637458483> Pegar eso en el F8: **connect cfx.re/join/b6mjvb** <a:DualRing1:834090756637458483>',
-			} });
-		}
-		else{
-			msg.channel.send('No Perteneces al equipo administrativo!');
-		}
 	}
 
 	if (msg.content.toLowerCase() === `${prefix}version`) {
@@ -169,6 +101,57 @@ client.on('message', async msg => {
 		}).catch(console.error);
 		msg.delete({ timeout: 10000 });
 
+	}
+
+	if(msg.author.bot || msg.channel.type === 'dm') return;
+	// if(autirizado || MOD || Abuelo')) {
+	const messageArray = msg.content.split(' ');
+	const cmd = messageArray[0];
+	const args = messageArray.slice(1);
+
+	if (cmd === `${prefix}sugerencia`) {
+		const pollDescription = args.slice(0).join(' ');
+		if (msg.channel.id === '832362060209717290') {
+			const embedPoll = new Discord.MessageEmbed()
+				.setTitle('💯 Sugerencia! 💯')
+				.setDescription(pollDescription)
+				.setColor('BLUE');
+			if(pollDescription !== null && pollDescription !== '') {
+				const msgEmbed = await msg.channel.send(embedPoll);
+				await msgEmbed.react('👍');
+				await msgEmbed.react('👎');
+			}
+			else{
+				msg.channel.send('**La sugerencia no puede estar vacia!**').then(msg => {
+					msg.delete({ timeout: 10000 });
+				}).catch(console.error);
+			}
+		}
+		else{
+			msg.reply('Las sugerencias van en el canal de: <#832362060209717290>').then(msg => {
+				msg.delete({ timeout: 10000 });
+			}).catch(console.error);
+		}
+		msg.delete({ timeout: 100 });
+	}
+
+	if (msg.content.toLowerCase() === `${prefix}admin`) {
+		if(autirizado || MOD || Abuelo) {
+			msg.channel.send(`**${prefix}laip / ${prefix}on / ${prefix}re / ${prefix}info / ${prefix}serverinfo / ${prefix}uptime / ${prefix}jugar** {Contenido} / Presencia ( **${prefix}online ${prefix}ausente ${prefix}ocupado ${prefix}invisible**) / ${prefix}cc [Numero de mensajes deseados a borrar]`);
+		}
+	}
+
+	if (msg.content.toLowerCase() === `${prefix}laip`) {
+		if(autirizado || MOD || Abuelo) {
+			msg.delete({ timeout: 100 });
+			msg.channel.send({ embed: {
+				color: 12320855,
+				description: '<a:DualRing1:834090756637458483> Pegar eso en el F8: **connect cfx.re/join/b6mjvb** <a:DualRing1:834090756637458483>',
+			} });
+		}
+		else{
+			msg.channel.send('No Perteneces al equipo administrativo!');
+		}
 	}
 
 	if (msg.content.toLowerCase() === `${prefix}on`) {
@@ -331,36 +314,48 @@ client.on('message', async msg => {
 		}
 	}
 
-	if(msg.author.bot || msg.channel.type === 'dm') return;
-	// if(autirizado || MOD || Abuelo')) {
-	const messageArray = msg.content.split(' ');
-	const cmd = messageArray[0];
-	const args = messageArray.slice(1);
-
-	if (cmd === `${prefix}sugerencia`) {
-		const pollDescription = args.slice(0).join(' ');
-		if (msg.channel.id === '832362060209717290') {
-			const embedPoll = new Discord.MessageEmbed()
-				.setTitle('💯 Sugerencia! 💯')
-				.setDescription(pollDescription)
-				.setColor('BLUE');
-			if(pollDescription !== null && pollDescription !== '') {
-				const msgEmbed = await msg.channel.send(embedPoll);
-				await msgEmbed.react('👍');
-				await msgEmbed.react('👎');
-			}
-			else{
-				msg.channel.send('**La sugerencia no puede estar vacia!**').then(msg => {
-					msg.delete({ timeout: 10000 });
-				}).catch(console.error);
-			}
+	if (msg.content.toLowerCase() === `${prefix}online`) {
+		if (autirizado || MOD || Abuelo) {
+			client.user.setStatus('online');
 		}
 		else{
-			msg.reply('Las sugerencias van en el canal de: <#832362060209717290>').then(msg => {
+			msg.channel.send('**No Perteneces al equipo administrativo!!**').then(msg => {
 				msg.delete({ timeout: 10000 });
 			}).catch(console.error);
 		}
-		msg.delete({ timeout: 100 });
+	}
+
+	if (msg.content.toLowerCase() === `${prefix}ausente`) {
+		if (autirizado || MOD || Abuelo) {
+			client.user.setStatus('idle');
+		}
+		else{
+			msg.channel.send('**No Perteneces al equipo administrativo!!**').then(msg => {
+				msg.delete({ timeout: 10000 });
+			}).catch(console.error);
+		}
+	}
+
+	if (msg.content.toLowerCase() === `${prefix}ocupado`) {
+		if (autirizado || MOD || Abuelo) {
+			client.user.setStatus('dnd');
+		}
+		else{
+			msg.channel.send('**No Perteneces al equipo administrativo!!**').then(msg => {
+				msg.delete({ timeout: 10000 });
+			}).catch(console.error);
+		}
+	}
+
+	if (msg.content.toLowerCase() === `${prefix}invisible`) {
+		if (autirizado || MOD || Abuelo) {
+			client.user.setStatus('invisible');
+		}
+		else{
+			msg.channel.send('**No Perteneces al equipo administrativo!!**').then(msg => {
+				msg.delete({ timeout: 10000 });
+			}).catch(console.error);
+		}
 	}
 
 	// ///////////
@@ -410,50 +405,6 @@ client.on('message', async msg => {
 		}
 	}
 
-	if (msg.content.toLowerCase() === `${prefix}online`) {
-		if (autirizado || MOD || Abuelo) {
-			client.user.setStatus('online');
-		}
-		else{
-			msg.channel.send('**No Perteneces al equipo administrativo!!**').then(msg => {
-				msg.delete({ timeout: 10000 });
-			}).catch(console.error);
-		}
-	}
-
-	if (msg.content.toLowerCase() === `${prefix}ausente`) {
-		if (autirizado || MOD || Abuelo) {
-			client.user.setStatus('idle');
-		}
-		else{
-			msg.channel.send('**No Perteneces al equipo administrativo!!**').then(msg => {
-				msg.delete({ timeout: 10000 });
-			}).catch(console.error);
-		}
-	}
-
-	if (msg.content.toLowerCase() === `${prefix}ocupado`) {
-		if (autirizado || MOD || Abuelo) {
-			client.user.setStatus('dnd');
-		}
-		else{
-			msg.channel.send('**No Perteneces al equipo administrativo!!**').then(msg => {
-				msg.delete({ timeout: 10000 });
-			}).catch(console.error);
-		}
-	}
-
-	if (msg.content.toLowerCase() === `${prefix}invisible`) {
-		if (autirizado || MOD || Abuelo) {
-			client.user.setStatus('invisible');
-		}
-		else{
-			msg.channel.send('**No Perteneces al equipo administrativo!!**').then(msg => {
-				msg.delete({ timeout: 10000 });
-			}).catch(console.error);
-		}
-	}
-
 
 	let totalSeconds = (client.uptime / 1000);
 	const days = Math.floor(totalSeconds / 86400);
@@ -473,16 +424,6 @@ client.on('message', async msg => {
 				msg.delete({ timeout: 10000 });
 			}).catch(console.error);
 		}
-	}
-	const guild = client.guilds.cache.get('832277845157347398');
-	const channel = guild.channels.cache.get('833818503156465684');
-	setInterval(() =>{
-		channel.setName(`Verificados: ${rolesmiembros.size}`);
-		// console.log(chalk.green('Updating Member Count'));
-	}, 36000);
-
-	if(msg.content.toLowerCase() == `${prefix}verificados`) {
-		msg.channel.send(`Somos **${rolesmiembros.size}** miembros verificados.`);
 	}
 
 
