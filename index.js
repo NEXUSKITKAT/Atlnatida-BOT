@@ -137,7 +137,7 @@ client.on('message', async msg => {
 
 	if (msg.content.toLowerCase() === `${prefix}admin`) {
 		if(autirizado || MOD || Abuelo) {
-			msg.channel.send(`**${prefix}laip / ${prefix}on / ${prefix}re / ${prefix}info / ${prefix}serverinfo / ${prefix}uptime / ${prefix}jugar** {Contenido} / Presencia ( **${prefix}online ${prefix}ausente ${prefix}ocupado ${prefix}invisible**) / ${prefix}cc [Numero de mensajes deseados a borrar]`);
+			msg.channel.send(`**${prefix}laip / ${prefix}on / ${prefix}re / ${prefix}info / ${prefix}serverinfo / ${prefix}uptime / ${prefix}jugar** {Contenido} / Presencia ( **${prefix}online ${prefix}ausente ${prefix}ocupado ${prefix}invisible**) / **${prefix}cc** [Numero de mensajes deseados a borrar]`);
 		}
 	}
 
@@ -358,6 +358,26 @@ client.on('message', async msg => {
 		}
 	}
 
+	let totalSeconds = (client.uptime / 1000);
+	const days = Math.floor(totalSeconds / 86400);
+	totalSeconds %= 86400;
+	const hours = Math.floor(totalSeconds / 3600);
+	totalSeconds %= 3600;
+	const minutes = Math.floor(totalSeconds / 60);
+	const seconds = Math.floor(totalSeconds % 60);
+	const uptime = `Activo durante: ${days} dias, ${hours} horas, ${minutes} minutos y ${seconds} segundos`;
+
+	if (msg.content.toLowerCase() === `${prefix}uptime`) {
+		if(autirizado || MOD || Abuelo) {
+			msg.channel.send(uptime);
+		}
+		else{
+			msg.channel.send('No Perteneces al equipo administrativo!').then(msg => {
+				msg.delete({ timeout: 10000 });
+			}).catch(console.error);
+		}
+	}
+
 	// ///////////
 
 
@@ -405,27 +425,7 @@ client.on('message', async msg => {
 		}
 	}
 
-
-	let totalSeconds = (client.uptime / 1000);
-	const days = Math.floor(totalSeconds / 86400);
-	totalSeconds %= 86400;
-	const hours = Math.floor(totalSeconds / 3600);
-	totalSeconds %= 3600;
-	const minutes = Math.floor(totalSeconds / 60);
-	const seconds = Math.floor(totalSeconds % 60);
-	const uptime = `Activo durante: ${days} dias, ${hours} horas, ${minutes} minutos y ${seconds} segundos`;
-
-	if (msg.content.toLowerCase() === `${prefix}uptime`) {
-		if(autirizado || MOD || Abuelo) {
-			msg.channel.send(uptime);
-		}
-		else{
-			msg.channel.send('No Perteneces al equipo administrativo!').then(msg => {
-				msg.delete({ timeout: 10000 });
-			}).catch(console.error);
-		}
-	}
-
+	// ///////////////
 
 	if (autirizado || MOD || Abuelo) {
 		if(msg.content.toLowerCase() == `${prefix}veri`) {
