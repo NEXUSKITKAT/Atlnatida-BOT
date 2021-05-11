@@ -64,7 +64,7 @@ client.on('message', msg => {
 client.on('message', async msg => {
 	if (msg.author.bot || msg.channel.type === 'dm') return;
 
-	const autirizado = msg.member.roles.cache.find(rol => rol.id === '832279343023390730');
+	const autorizado = msg.member.roles.cache.find(rol => rol.id === '832279343023390730');
 	const MOD = msg.member.roles.cache.find(rol => rol.id === '834919111359987762');
 	const Abuelo = msg.member.roles.cache.find(rol => rol.id === '833682451288031242');
 
@@ -80,7 +80,7 @@ client.on('message', async msg => {
 	}
 
 	if (msg.content.toLowerCase() === `${prefix}ip`) {
-		if(autirizado || MOD || Abuelo) {
+		if(autorizado || MOD || Abuelo) {
 			msg.channel.send({ embed: {
 				color: 12320855,
 				description: '<a:DualRing1:834090756637458483> Pegar eso en el F8: **connect cfx.re/join/b6mjvb** <a:DualRing1:834090756637458483>',
@@ -111,7 +111,7 @@ client.on('message', async msg => {
 	}
 
 	if(msg.author.bot || msg.channel.type === 'dm') return;
-	// if(autirizado || MOD || Abuelo')) {
+	// if(autorizado || MOD || Abuelo')) {
 	const messageArray = msg.content.split(' ');
 	const cmd = messageArray[0];
 	const args = messageArray.slice(1);
@@ -145,13 +145,13 @@ client.on('message', async msg => {
 	// ///////////////////////////////////////////                      ADMIN                /////////////
 
 	if (msg.content.toLowerCase() === `${prefix}admin`) {
-		if(autirizado || MOD || Abuelo) {
+		if(autorizado || MOD || Abuelo) {
 			msg.channel.send(`**${prefix}on / ${prefix}re / ${prefix}info / ${prefix}serverinfo / ${prefix}uptime / ${prefix}jugar** {Contenido} / Presencia ( **${prefix}online ${prefix}ausente ${prefix}ocupado ${prefix}invisible**) / **${prefix}cc** [Numero de mensajes deseados a borrar]`);
 		}
 	}
 
 	if (msg.content.toLowerCase() === `${prefix}on`) {
-		if(autirizado || MOD || Abuelo) {
+		if(autorizado || MOD || Abuelo) {
 			client.user.setStatus('online');
 			msg.delete({ timeout: 100 });
 			msg.channel.send({ embed: {
@@ -168,7 +168,7 @@ client.on('message', async msg => {
 	}
 
 	if (msg.content.toLowerCase() === `${prefix}re`) {
-		if(autirizado || MOD || Abuelo) {
+		if(autorizado || MOD || Abuelo) {
 			msg.delete({ timeout: 100 });
 			client.user.setStatus('dnd');
 			msg.channel.send({ embed: {
@@ -189,7 +189,7 @@ client.on('message', async msg => {
 	const { MessageEmbed } = require('discord.js');
 
 	if(msg.content.toLowerCase().startsWith (`${prefix}info`)) {
-		if(autirizado || MOD || Abuelo) {
+		if(autorizado || MOD || Abuelo) {
 
 			const { guild, channel } = msg;
 
@@ -247,7 +247,7 @@ client.on('message', async msg => {
 	}
 
 	if(msg.content.toLowerCase().startsWith (`${prefix}serverinfo`)) {
-		if(autirizado || MOD || Abuelo) {
+		if(autorizado || MOD || Abuelo) {
 
 			const members = msg.guild.members.cache;
 			const channels = msg.guild.channels.cache;
@@ -311,7 +311,7 @@ client.on('message', async msg => {
 	}
 
 	if (msg.content.toLowerCase() === `${prefix}online`) {
-		if (autirizado || MOD || Abuelo) {
+		if (autorizado || MOD || Abuelo) {
 			client.user.setStatus('online');
 		}
 		else{
@@ -322,7 +322,7 @@ client.on('message', async msg => {
 	}
 
 	if (msg.content.toLowerCase() === `${prefix}ausente`) {
-		if (autirizado || MOD || Abuelo) {
+		if (autorizado || MOD || Abuelo) {
 			client.user.setStatus('idle');
 		}
 		else{
@@ -333,7 +333,7 @@ client.on('message', async msg => {
 	}
 
 	if (msg.content.toLowerCase() === `${prefix}ocupado`) {
-		if (autirizado || MOD || Abuelo) {
+		if (autorizado || MOD || Abuelo) {
 			client.user.setStatus('dnd');
 		}
 		else{
@@ -344,7 +344,7 @@ client.on('message', async msg => {
 	}
 
 	if (msg.content.toLowerCase() === `${prefix}invisible`) {
-		if (autirizado || MOD || Abuelo) {
+		if (autorizado || MOD || Abuelo) {
 			client.user.setStatus('invisible');
 		}
 		else{
@@ -355,7 +355,7 @@ client.on('message', async msg => {
 	}
 	if (msg.content.toLowerCase() === `${prefix}presencia`) {
 		const members = msg.guild.members.cache;
-		if (autirizado || MOD || Abuelo) {
+		if (autorizado || MOD || Abuelo) {
 			msg.channel.send(`**Online:** ${members.filter(member => member.presence.status === 'online').size}\n**Ausentes:** ${members.filter(member => member.presence.status === 'idle').size}\n**No molestar:** ${members.filter(member => member.presence.status === 'dnd').size}\n**Offline:** ${members.filter(member => member.presence.status === 'offline').size}`);
 		}
 	}
@@ -369,7 +369,7 @@ client.on('message', async msg => {
 	const uptime = `Activo durante: ${days} dias, ${hours} horas, ${minutes} minutos y ${seconds} segundos`;
 
 	if (msg.content.toLowerCase() === `${prefix}uptime`) {
-		if(autirizado || MOD || Abuelo) {
+		if(autorizado || MOD || Abuelo) {
 			msg.channel.send(uptime);
 		}
 		else{
@@ -428,7 +428,7 @@ client.on('message', async msg => {
 
 	// ///////////////
 
-	if (autirizado || MOD || Abuelo) {
+	if (autorizado || MOD || Abuelo) {
 		if(msg.content.toLowerCase() == `${prefix}veri`) {
 
 			const Embed = new Discord.MessageEmbed()
@@ -444,7 +444,7 @@ client.on('message', async msg => {
 	const argus = msg.content.slice(prefix.length).trim().split(/ +/g);
 	const command = argus.shift().toLowerCase();
 	if (command === 'cc') {
-		if (autirizado || Abuelo || MOD) {
+		if (autorizado || Abuelo || MOD) {
 			let num1 = argus[0];
 			if(isNaN(num1)) {
 				msg.delete({ timeout: 100 });
