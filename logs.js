@@ -33,7 +33,7 @@ module.exports = (client) => {
 				.setTimestamp()
 				.setFooter(message.guild.name, serverIcon);
 
-			client.channels.cache.get('844686874567376917').send(Embed);
+			client.channels.cache.get('846380018989137930').send(Embed);
 		}
 
 	});
@@ -72,7 +72,7 @@ module.exports = (client) => {
 				.setTimestamp()
 				.setFooter(message.guild.name, serverIcon);
 
-			client.channels.cache.get('844686874567376917').send(Embed);
+			client.channels.cache.get('846380018989137930').send(Embed);
 		}
 	});
 
