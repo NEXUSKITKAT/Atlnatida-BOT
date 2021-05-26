@@ -17,6 +17,7 @@ client.on('ready', () => {
 	console.log(bot_version);
 	console.log('El prefijo es: ' + chalk.green(prefix));
 	console.log(chalk.green('[✓] Todo Ejecutado correctamente!'));
+	client.channels.cache.get('834032383769706526').send(`**Estoy Online\n Version: ${bot_version}\n El prefijo es: ${prefix}\n [✓] Todo Ejecutado correctamente!**`);
 
 	Logs(client);
 	Welkome(client);
