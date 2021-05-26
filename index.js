@@ -26,6 +26,14 @@ client.on('ready', () => {
 
 client.on('message', msg => {
 	if (msg.author.bot || msg.channel.type === 'dm') return;
+
+	const roleID = '832277915747614811';
+	const rolesmiembros = msg.guild.roles.cache.get(roleID).members;
+	console.log(`Got ${rolesmiembros.size} members with that role.`);
+	const guild = client.guilds.cache.get('832277845157347398');
+	const channel = guild.channels.cache.get('833818503156465684');
+	channel.setName(`Verificados: ${rolesmiembros.size}`);
+
 	if(msg.content.startsWith(`${prefix}jugar`)) {
 		if(msg.member.roles.cache.find(rol => rol.id === '833682451288031242' || '834919111359987762')) {
 			const content = msg.content.replace(`${prefix}jugar`, ' ');
@@ -42,15 +50,6 @@ client.on('message', msg => {
 			}).catch(console.error);
 		}
 	}
-
-	const rolesmiembros = msg.guild.roles.cache.get('832277915747614811').members;
-
-	const guild = client.guilds.cache.get('832277845157347398');
-	const channel = guild.channels.cache.get('833818503156465684');
-	setInterval(() =>{
-		channel.setName(`Verificados: ${rolesmiembros.size}`);
-		// console.log(chalk.green('Updating Member Count'));
-	}, 60000);
 
 	if(msg.content.toLowerCase() == `${prefix}verificados`) {
 		msg.channel.send(`Somos **${rolesmiembros.size}** miembros verificados.`);

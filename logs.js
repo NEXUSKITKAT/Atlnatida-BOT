@@ -24,7 +24,7 @@ module.exports = (client) => {
 		}
 		else{
 			console.log(`${message.author.tag} said: ${message.content}`);
-			const Embed = new Discord.MessageEmbed()
+			/* const Embed = new Discord.MessageEmbed()
 				.setColor('#1CFF0F')
 				.setTitle(message.content)
 				.setAuthor(message.author.tag, message.author.displayAvatarURL())
@@ -33,7 +33,7 @@ module.exports = (client) => {
 				.setTimestamp()
 				.setFooter(message.guild.name, serverIcon);
 
-			client.channels.cache.get('846380018989137930').send(Embed);
+			client.channels.cache.get('846380018989137930').send(Embed);*/
 		}
 
 	});
@@ -41,10 +41,10 @@ module.exports = (client) => {
 	client.on('messageDelete', async message => {
 		if (!message.guild) return;
 		if(message.author.bot) return;
-		const today = new Date();
+		// const today = new Date();
 
-		const date = today.getDate() + '/' + (today.getMonth() + 1) + '/' + today.getFullYear();
-		const time = today.getHours() + ':' + ((today.getMinutes() < 10 ? '0' : '') + today.getMinutes() + ':' + ((today.getSeconds() < 10 ? '0' : '') + today.getSeconds()));
+		// const date = today.getDate() + '/' + (today.getMonth() + 1) + '/' + today.getFullYear();
+		// const time = today.getHours() + ':' + ((today.getMinutes() < 10 ? '0' : '') + today.getMinutes() + ':' + ((today.getSeconds() < 10 ? '0' : '') + today.getSeconds()));
 		const fetchedLogs = await message.guild.fetchAuditLogs({
 			limit: 1,
 			type: 'MESSAGE_DELETE',
@@ -60,8 +60,8 @@ module.exports = (client) => {
 			console.log(chalk.bold.red(`El mensaje de ${message.author.tag} fue borrado por ${executor.tag}. El contenido fue: ${message.content}`));
 		}
 		else {
-			const serverIcon = message.guild.iconURL ({ dynamic:true });
 			console.log(chalk.bold.yellow(`${message.author.tag} Borro su mensaje. El contenido fue: ${message.content}`));
+			/* const serverIcon = message.guild.iconURL ({ dynamic:true });
 			const Embed = new Discord.MessageEmbed()
 				.setColor('#EC1919')
 				.setTitle(message.content)
@@ -72,7 +72,7 @@ module.exports = (client) => {
 				.setTimestamp()
 				.setFooter(message.guild.name, serverIcon);
 
-			client.channels.cache.get('846380018989137930').send(Embed);
+			client.channels.cache.get('846380018989137930').send(Embed);*/
 		}
 	});
 
