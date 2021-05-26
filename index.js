@@ -29,7 +29,6 @@ client.on('message', msg => {
 
 	const roleID = '832277915747614811';
 	const rolesmiembros = msg.guild.roles.cache.get(roleID).members;
-	console.log(`Got ${rolesmiembros.size} members with that role.`);
 	const guild = client.guilds.cache.get('832277845157347398');
 	const channel = guild.channels.cache.get('833818503156465684');
 	channel.setName(`Verificados: ${rolesmiembros.size}`);
