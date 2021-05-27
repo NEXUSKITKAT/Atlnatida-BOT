@@ -466,6 +466,32 @@ client.on('message', async msg => {
 		}
 	}
 
+	const argumento = msg.content.trim().split(/ +/g);
+	const comando = argumento.shift().toLowerCase();
+
+	if (comando === `${prefix}send`) {
+		if (autorizado || Abuelo || MOD) {
+			const canal = argumento[0];
+			const mensaje = argumento.slice(1).join(' ');
+			if(!isNaN(canal)) {
+				client.channels.cache.get(canal).send(mensaje);
+				msg.channel.send(`Envie el mensaje al canal <#${canal}>`);
+			}
+			else{
+				msg.reply('Primero la id del canal luego el mensaje').then(msg => {
+					msg.delete({ timeout: 5000 });
+				}).catch(console.error);
+			}
+		}
+		else{
+			msg.reply('**No Perteneces al equipo administrativo!**').then(msg => {
+				msg.delete({ timeout: 10000 });
+			}).catch(console.error);
+			msg.delete({ timeout: 10000 });
+		}
+
+	}
+
 
 });
 
