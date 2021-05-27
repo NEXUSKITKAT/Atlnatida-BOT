@@ -151,7 +151,7 @@ client.on('message', async msg => {
 
 	if (msg.content.toLowerCase() === `${prefix}admin`) {
 		if(autorizado || MOD || Abuelo) {
-			msg.channel.send(`**${prefix}on / ${prefix}re / ${prefix}info / ${prefix}serverinfo / ${prefix}uptime / ${prefix}jugar** {Contenido} / Presencia ( **${prefix}online ${prefix}ausente ${prefix}ocupado ${prefix}invisible**) / **${prefix}cc** [Numero de mensajes deseados a borrar]`);
+			msg.channel.send(`**${prefix}on / ${prefix}re / ${prefix}info / ${prefix}serverinfo / ${prefix}uptime / ${prefix}jugar** {Contenido} / Presencia ( **${prefix}online ${prefix}ausente ${prefix}ocupado ${prefix}invisible**) / **${prefix}cc** [Numero de mensajes deseados a borrar] / **${prefix}send** (ID canal) (mensaje)`);
 		}
 	}
 
