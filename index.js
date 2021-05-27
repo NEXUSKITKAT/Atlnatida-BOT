@@ -12,12 +12,18 @@ const { token, prefix, bot_version } = require('./config.json');
 
 // ////////////////////////////////////////////INICIO/////////////////////////////////////////////////////////// //
 client.on('ready', () => {
+	const today = new Date();
+	const date = today.getDate() + '/' + (today.getMonth() + 1) + '/' + today.getFullYear();
+	const time = today.getHours() + ':' + ((today.getMinutes() < 10 ? '0' : '') + today.getMinutes() + ':' + ((today.getSeconds() < 10 ? '0' : '') + today.getSeconds()));
+
 	console.log(chalk.bold.magenta(`Online  ${client.user.tag}!`));
-	client.user.setActivity('Atlatinda RP', { type: 'PLAYING' });
+
 	console.log(bot_version);
 	console.log('El prefijo es: ' + chalk.green(prefix));
 	console.log(chalk.green('[✓] Todo Ejecutado correctamente!'));
-	client.channels.cache.get('834032383769706526').send(`**Estoy Online\n Version: ${bot_version}\n El prefijo es: ${prefix}\n [✓] Todo Ejecutado correctamente!**`);
+	client.channels.cache.get('834032383769706526').send(`**Online: ${date} ~ ${time}\n Version: ${bot_version}\n El prefijo es: ${prefix}\n [✓] Todo Ejecutado correctamente!**`);
+
+	client.user.setActivity('Atlatinda RP', { type: 'PLAYING' });
 
 	Logs(client);
 	Welkome(client);
