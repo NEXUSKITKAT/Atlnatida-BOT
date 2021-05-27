@@ -432,23 +432,9 @@ client.on('message', async msg => {
 	}
 
 	// ///////////////
-
-	if (autorizado || MOD || Abuelo) {
-		if(msg.content.toLowerCase() == `${prefix}veri`) {
-
-			const Embed = new Discord.MessageEmbed()
-				.setColor('#1CFF0F')
-				.setTitle('✓ Verificate ✓')
-				.setDescription('Reacciona al emoji ✅ y obtén el rol de <@&832277915747614811>')
-				.setFooter('Pasalo bien en nuestro servidor de RP.   Att: El Equipo administrativo');
-
-			const msgEmbed = await msg.channel.send(Embed);
-			msgEmbed.react('✅');
-		}
-	}
-	const argus = msg.content.slice(prefix.length).trim().split(/ +/g);
+	const argus = msg.content.trim().split(/ +/g);
 	const command = argus.shift().toLowerCase();
-	if (command === 'cc') {
+	if (command === `${prefix}cc`) {
 		if (autorizado || Abuelo || MOD) {
 			let num1 = argus[0];
 			if(isNaN(num1)) {
