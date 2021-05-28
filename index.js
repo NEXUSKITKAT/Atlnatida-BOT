@@ -100,14 +100,7 @@ client.on('message', async msg => {
 		msg.channel.send(`Version: ${bot_version}`);
 	}
 
-	if (msg.content === 'F') {
-		msg.channel.send('F!').then(msg => {
-			msg.delete({ timeout: 10000 });
-		}).catch(console.error);
-		msg.delete({ timeout: 10000 });
-
-	}
-	if (msg.content === 'f') {
+	if (msg.content.toLowerCase() === `${prefix}f`) {
 		msg.channel.send('F!').then(msg => {
 			msg.delete({ timeout: 10000 });
 		}).catch(console.error);
