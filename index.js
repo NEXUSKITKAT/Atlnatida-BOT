@@ -508,7 +508,7 @@ client.on('message', async msg => {
 			}
 		}
 		else{
-			msg.reply('**No eres admin**').then(msg => {
+			msg.reply('**No Perteneces al equipo administrativo!**').then(msg => {
 				msg.delete({ timeout: 10000 });
 			}).catch(console.error);
 			msg.delete({ timeout: 10000 });
