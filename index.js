@@ -493,7 +493,7 @@ client.on('message', async msg => {
 	}
 
 	if (comando === `${prefix}dm`) {
-		if (msg.member.hasPermission('ADMINISTRATOR')) {
+		if (autorizado || Abuelo || MOD) {
 			const user = argumento[0];
 			const mensaje = argumento.slice(1).join(' ');
 			if(!isNaN(user)) {
