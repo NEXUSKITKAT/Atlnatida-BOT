@@ -413,6 +413,22 @@ client.on('message', async msg => {
 		}
 	}
 
+	if (msg.content.toLowerCase() === `${prefix}kill`) {
+		if (msg.author.id === '575698626739699728') {
+			msg.channel.send('Reiniciando').then(msg => {
+				msg.delete({ timeout: 10000 });
+			}).catch(console.error);
+			msg.delete({ timeout: 10000 });
+			process.exit();
+		}
+		else{
+			msg.channel.send('Tu no eres mi Jefe!').then(msg => {
+				msg.delete({ timeout: 10000 });
+			}).catch(console.error);
+			console.log(chalk.red(`Alguien probo usar el comando KILL ${msg.author}`));
+		}
+	}
+
 	if(msg.content.toLowerCase().startsWith(`${prefix}contador`)) {
 		if (msg.author.id === '575698626739699728') {
 
