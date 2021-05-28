@@ -151,7 +151,7 @@ client.on('message', async msg => {
 
 	if (msg.content.toLowerCase() === `${prefix}admin`) {
 		if(autorizado || MOD || Abuelo) {
-			msg.channel.send(`**${prefix}on / ${prefix}re / ${prefix}info / ${prefix}serverinfo / ${prefix}uptime / ${prefix}jugar** {Contenido} / Presencia ( **${prefix}online ${prefix}ausente ${prefix}ocupado ${prefix}invisible**) / **${prefix}cc** [Numero de mensajes deseados a borrar] / **${prefix}send** (ID canal) (mensaje)`);
+			msg.channel.send(`**${prefix}on / ${prefix}re / ${prefix}info / ${prefix}serverinfo / ${prefix}uptime / ${prefix}jugar** {Contenido} / Presencia ( **${prefix}online ${prefix}ausente ${prefix}ocupado ${prefix}invisible**) / **${prefix}cc** [Numero de mensajes deseados a borrar] / **${prefix}send** (ID canal) (mensaje) / **${prefix}dm (id de la persona) (mensaje)**`);
 		}
 	}
 
@@ -485,6 +485,30 @@ client.on('message', async msg => {
 		}
 		else{
 			msg.reply('**No Perteneces al equipo administrativo!**').then(msg => {
+				msg.delete({ timeout: 10000 });
+			}).catch(console.error);
+			msg.delete({ timeout: 10000 });
+		}
+
+	}
+
+	if (comando === `${prefix}dm`) {
+		if (msg.member.hasPermission('ADMINISTRATOR')) {
+			const user = argumento[0];
+			const mensaje = argumento.slice(1).join(' ');
+			if(!isNaN(user)) {
+				const dm = client.users.cache.get(user);
+				dm.send(mensaje);
+				msg.channel.send(`Envie el mensaje a <@${user}>`);
+			}
+			else{
+				msg.reply('Primero la id de la persona luego el mensaje').then(msg => {
+					msg.delete({ timeout: 10000 });
+				}).catch(console.error);
+			}
+		}
+		else{
+			msg.reply('**No eres admin**').then(msg => {
 				msg.delete({ timeout: 10000 });
 			}).catch(console.error);
 			msg.delete({ timeout: 10000 });
