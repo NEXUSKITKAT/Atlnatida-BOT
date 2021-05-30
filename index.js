@@ -8,7 +8,8 @@ const Welkome = require('./bienvenida-stats');
 require('console-stamp')(console, {
 	format: ':date(dd/mm/yy ~ HH:MM:ss)',
 });
-const { token, prefix, bot_version } = require('./config.json');
+const { prefix, bot_version } = require('./config.json');
+require ('dotenv').config();
 
 // ////////////////////////////////////////////INICIO/////////////////////////////////////////////////////////// //
 client.on('ready', () => {
@@ -528,4 +529,4 @@ client.on('message', async msg => {
 
 });
 
-client.login(token);
+client.login(process.env.TOKEN);
