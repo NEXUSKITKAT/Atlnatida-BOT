@@ -67,7 +67,7 @@ client.on('message', msg => {
 
 
 client.on('message', async msg => {
-	if (msg.author.bot || msg.channel.type === 'dm') return;
+	if (!msg.content.startsWith(prefix) || msg.author.bot || msg.channel.type === 'dm') return;
 
 	const autorizado = msg.member.roles.cache.find(rol => rol.id === '832279343023390730');
 	const MOD = msg.member.roles.cache.find(rol => rol.id === '834919111359987762');
