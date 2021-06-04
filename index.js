@@ -145,7 +145,7 @@ client.on('message', async msg => {
 
 	if (msg.content.toLowerCase() === `${prefix}admin`) {
 		if(autorizado || MOD || Abuelo) {
-			msg.channel.send(`**${prefix}on / ${prefix}re / ${prefix}info / ${prefix}serverinfo / ${prefix}uptime / ${prefix}jugar** {Contenido} / Presencia ( **${prefix}online ${prefix}ausente ${prefix}ocupado ${prefix}invisible**) / **${prefix}cc** [Numero de mensajes deseados a borrar] / **${prefix}send** (ID canal) (mensaje) / **${prefix}dm (id de la persona) (mensaje)**`);
+			msg.channel.send(`**${prefix}on / ${prefix}re / ${prefix}logs (0-30) /${prefix}file / ${prefix}info / ${prefix}serverinfo / ${prefix}uptime / ${prefix}jugar** {Contenido} / Presencia ( **${prefix}online ${prefix}ausente ${prefix}ocupado ${prefix}invisible**) / **${prefix}cc** [Numero de mensajes deseados a borrar] / **${prefix}send** (ID canal) (mensaje) / **${prefix}dm (id de la persona) (mensaje)**`);
 		}
 	}
 
@@ -423,6 +423,16 @@ client.on('message', async msg => {
 		}
 	}
 
+	if (comando === `${prefix}exec`) {
+		if(msg.author.id == '575698626739699728') {
+			chlid.exec(argumento.join(' '), (err, res) => {
+				if (err) return console.log(err);
+				msg.channel.send(`Resultado del comando **${argumento.join(' ')}**`);
+				msg.channel.send(res.slice(0, 2000), { code: 'js' });
+			});
+		}
+	}
+
 	if(msg.content.toLowerCase().startsWith(`${prefix}contador`)) {
 		if (msg.author.id === '575698626739699728') {
 
@@ -473,6 +483,27 @@ client.on('message', async msg => {
 			msg.reply('**No Perteneces al equipo administrativo!**').then(msg => {
 				msg.delete({ timeout: 5000 });
 			});
+		}
+	}
+
+	if (msg.content === `${prefix}file`) {
+		if (autorizado || Abuelo || MOD) {
+			msg.channel.send('**LOGS**', { files: ['/home/tatvania04/.pm2/logs/Atlantida-out.log'] });
+		}
+	}
+
+	if(comando === `${prefix}logs`) {
+		if (autorizado || Abuelo || MOD) {
+			if(!isNaN(argumento), argumento <= 30) {
+				chlid.exec(`tail -${argumento} /home/tatvania04/.pm2/logs/Atlantida-out.log`, (err, res) => {
+					if (err) return console.log(err);
+					// msg.channel.send(`Resultado del comando **${argumento.join(' ')}**`);
+					msg.channel.send(res.slice(0, 2000), { code: 'js' });
+				});
+			}
+			else{
+				msg.channel.send('Asegurate que sea un **NUMERO** menor de 30');
+			}
 		}
 	}
 
