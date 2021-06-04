@@ -146,7 +146,7 @@ client.on('message', async msg => {
 
 	if (msg.content.toLowerCase() === `${prefix}admin`) {
 		if(autorizado || MOD || Abuelo) {
-			msg.channel.send(`**${prefix}on / ${prefix}re / ${prefix}logs (0-30) /${prefix}file / ${prefix}info / ${prefix}serverinfo / ${prefix}uptime / ${prefix}jugar** {Contenido} / Presencia ( **${prefix}online ${prefix}ausente ${prefix}ocupado ${prefix}invisible**) / **${prefix}cc** [Numero de mensajes deseados a borrar] / **${prefix}send** (ID canal) (mensaje) / **${prefix}dm (id de la persona) (mensaje)**`);
+			msg.channel.send(`**${prefix}on / ${prefix}re / ${prefix}logs (0-30) / ${prefix}buscar (numero de lineas tratar de que no sean muchas) (contenido a buscar) /${prefix}file / ${prefix}info / ${prefix}serverinfo / ${prefix}uptime / ${prefix}jugar** {Contenido} / Presencia ( **${prefix}online ${prefix}ausente ${prefix}ocupado ${prefix}invisible**) / **${prefix}cc** [Numero de mensajes deseados a borrar] / **${prefix}send** (ID canal) (mensaje) / **${prefix}dm (id de la persona) (mensaje)**`);
 		}
 	}
 
@@ -501,7 +501,6 @@ client.on('message', async msg => {
 			if(!isNaN(argumento), argumento <= 30) {
 				chlid.exec(`tail -${argumento} /home/tatvania04/.pm2/logs/Atlantida-out.log`, (err, res) => {
 					if (err) return console.log(err);
-					// msg.channel.send(`Resultado del comando **${argumento.join(' ')}**`);
 					msg.channel.send(res.slice(0, 2000), { code: 'js' });
 				});
 			}
@@ -511,6 +510,19 @@ client.on('message', async msg => {
 		}
 	}
 
+	if(comando === `${prefix}buscar`) {
+		if (autorizado || Abuelo || MOD) {
+			const lines = argumento[0];
+			const search = argumento.slice(1).join(' ');
+			if(!isNaN(lines)) {
+				chlid.exec(`tail -${lines} /home/tatvania04/.pm2/logs/Atlantida-out.log | grep ${search}`, (err, res) => {
+					if (err) return;
+					// msg.channel.send(`Resultado del comando **${argumento.join(' ')}**`);
+					msg.channel.send(res.slice(0, 2000), { code: 'bash' }, { split: true });
+				});
+			}
+		}
+	}
 
 	if (comando === `${prefix}send`) {
 		if (autorizado || Abuelo || MOD) {
