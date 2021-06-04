@@ -381,6 +381,9 @@ client.on('message', async msg => {
 
 	// ///////////
 
+	const argumento = msg.content.trim().split(/ +/g);
+	const comando = argumento.shift().toLowerCase();
+
 
 	if (msg.content.toLowerCase() === `${prefix}join`) {
 		if (msg.author.id === '575698626739699728') {
@@ -508,8 +511,6 @@ client.on('message', async msg => {
 		}
 	}
 
-	const argumento = msg.content.trim().split(/ +/g);
-	const comando = argumento.shift().toLowerCase();
 
 	if (comando === `${prefix}send`) {
 		if (autorizado || Abuelo || MOD) {
