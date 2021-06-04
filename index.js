@@ -4,6 +4,7 @@ const Discord = require('discord.js');
 const client = new Discord.Client();
 const chalk = require('chalk');
 const Logs = require('./logs');
+const chlid = require('child_process');
 const Welkome = require('./bienvenida-stats');
 require('console-stamp')(console, {
 	format: ':date(dd/mm/yy ~ HH:MM:ss)',
