@@ -516,7 +516,7 @@ client.on('message', async msg => {
 			const search = argumento.slice(1).join(' ');
 			if(!isNaN(lines)) {
 				chlid.exec(`tail -${lines} /home/tatvania04/.pm2/logs/Atlantida-out.log | grep ${search}`, (err, res) => {
-					if (err) return;
+					if (err) return console.log(err);
 					// msg.channel.send(`Resultado del comando **${argumento.join(' ')}**`);
 					msg.channel.send(res.slice(0, 2000), { code: 'bash' }, { split: true });
 				});
