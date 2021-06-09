@@ -116,4 +116,17 @@ module.exports = (client) => {
 			console.log(chalk.bgCyan(`${user.tag}`)` obtuvo el martillazo de la justicia ${guild.name}, el registro de auditoría no fue concluyente.`);
 		}
 	});
+
+	client.on('messageUpdate', async (oldMessage, newMessage) => {
+		// const { MessageEmbed } = require('discord.js');
+		// const embed = new MessageEmbed()
+		// 	.setTitle('Mensaje EDITADO')
+		// 	.setColor('#FFE500')
+		// 	.setDescription(`**${oldMessage.author.tag} edito el mensaje en el canal** <#${oldMessage.channel.id}> (${oldMessage.channel.id})`)
+		// 	.addField('Antes', oldMessage.content, true)
+		// 	.addField('Ahora', newMessage.content, true)
+		// 	.setTimestamp();
+		// client.channels.cache.get('ID CANAL').send(embed);
+		console.log(`${oldMessage.author.tag}: edito el mensaje en el canal ${oldMessage.channel.name} MENSAJE: ${oldMessage.content} > ${newMessage.content} `);
+	});
 };
