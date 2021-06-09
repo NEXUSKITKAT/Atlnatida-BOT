@@ -492,14 +492,14 @@ client.on('message', async msg => {
 
 	if (msg.content === `${prefix}file`) {
 		if (autorizado || Abuelo || MOD) {
-			msg.channel.send('**LOGS**', { files: ['/home/tatvania04/.pm2/logs/Atlantida-out.log'] });
+			msg.channel.send('**LOGS**', { files: ['../.pm2/logs/Atlantida-out.log'] });
 		}
 	}
 
 	if(comando === `${prefix}logs`) {
 		if (autorizado || Abuelo || MOD) {
 			if(!isNaN(argumento), argumento <= 30) {
-				chlid.exec(`tail -${argumento} /home/tatvania04/.pm2/logs/Atlantida-out.log`, (err, res) => {
+				chlid.exec(`tail -${argumento} ../.pm2/logs/Atlantida-out.log`, (err, res) => {
 					if (err) return console.log(err);
 					msg.channel.send(res.slice(0, 2000), { code: 'js' });
 				});
@@ -515,7 +515,7 @@ client.on('message', async msg => {
 			const lines = argumento[0];
 			const search = argumento.slice(1).join(' ');
 			if(!isNaN(lines)) {
-				chlid.exec(`tail -${lines} /home/tatvania04/.pm2/logs/Atlantida-out.log | grep ${search}`, (err, res) => {
+				chlid.exec(`tail -${lines} ../.pm2/logs/Atlantida-out.log | grep ${search}`, (err, res) => {
 					if (err) return console.log(err);
 					// msg.channel.send(`Resultado del comando **${argumento.join(' ')}**`);
 					msg.channel.send(res.slice(0, 2000), { code: 'bash' }, { split: true });
